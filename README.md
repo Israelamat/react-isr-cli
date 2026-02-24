@@ -35,10 +35,10 @@ npm install -g react-isr-cli
 # Use it without installing
 npx react-isr-cli
 
+---
 
-🛠️ Available Commands
-
-Currently, the basic commands are:
+## 🛠️ Available Commands
+##Currently, the basic commands are:
 
 # Generate a TypeScript interface
 react-isr-cli generate interface /path/to/IExample.ts
@@ -49,6 +49,8 @@ react-isr-cli generate service /path/to/example.service.ts
 # Generate a React component
 react-isr-cli generate component /path/to/ExampleComponent.tsx
 
-Example Usage
+---
+
+## Example Usage
 # Generate a UserCard component inside /src/users/
 npx react-isr-cli generate component /src/users/UserCard.tsx
