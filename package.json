@@ -1,0 +1,21 @@
+{
+  "name": "tu-cli",
+  "version": "1.0.0",
+  "description": "Generate a project from a templates like interfaces services and standard components",
+  "main": "index.js",
+  "bin": {
+    "rg": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^14.0.3",
+    "fs-extra": "^11.3.3",
+    "inquirer": "^8.2.4"
+  },
+  "type": "module",
+  "author": "Israel",
+  "license": "MIT"
+}
