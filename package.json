@@ -1,5 +1,5 @@
 {
-  "name": "tu-cli",
+  "name": "react-isr-cli",
   "version": "1.0.0",
   "description": "Generate a project from a templates like interfaces services and standard components",
   "main": "index.js",

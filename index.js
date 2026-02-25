@@ -6,48 +6,12 @@ import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import templates from './templates/templates.js';
+import { ALIAS_MAP, FOLDER_MAP, TYPE_CHOICES } from './config/constants.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// --- Templates ---
-const templates = {
-    component: (name) => `
-export const ${name} = () => {
-  return (
-    <div className="${name.toLowerCase()}">
-      <h1>${name} Component</h1>
-    </div>
-  );
-};
-`,
-    service: (name) => `
-export const ${name}Service = {
-  getAll: async () => {
-    const response = await fetch('https://api.example.com/${name.toLowerCase()}');
-    return await response.json();
-  }
-};
-`,
-    interface: (name) => `
-export interface I${name} {
-  id: number;
-  name: string;
-}
-`
-};
-
-const logo = `
-${chalk.cyan(' ██████╗ ███████╗ █████╗  ██████╗████████╗     ██╗███████╗██████╗ ')}
-${chalk.cyan(' ██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝     ██║██╔════╝██╔══██╗')}
-${chalk.cyan(' ██████╔╝█████╗  ███████║██║        ██║        ██║███████╗██████╔╝')}
-${chalk.cyan(' ██╔══██╗██╔══╝  ██╔══██║██║        ██║        ██║╚════██║██╔══██╗')}
-${chalk.cyan(' ██║  ██║███████╗██║  ██║╚██████╗   ██║        ██║███████║██║  ██║')}
-${chalk.cyan(' ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═╝        ╚═╝╚══════╝╚═╝  ╚═╝')}
-${chalk.yellow('                      REACT-ISR-CLI v1.0.0')}
-`;
-
-// --- CLI ---
 program
     .version('1.0.0')
     .description('react-isr-cli');
@@ -56,7 +20,8 @@ program
     .command('g [type] [path]')
     .alias('generate')
     .action(async (type, pathArg) => {
-        let selectedType = type;
+
+        let selectedType = ALIAS_MAP[type] || type;
         let inputPath = pathArg;
 
         // If no type is provided, ask the user
@@ -65,11 +30,7 @@ program
                 type: 'list',
                 name: 'type',
                 message: '¿What do u want to generate?',
-                choices: [
-                    { name: 'Component', value: 'component' },
-                    { name: 'Service', value: 'service' },
-                    { name: 'Interface', value: 'interface' }
-                ]
+                choices: TYPE_CHOICES
             }]);
             selectedType = answers.type;
         }
@@ -88,11 +49,7 @@ program
         // --- INTELIGENCE PATH ---
         const baseName = path.basename(inputPath);
         const subFolder = path.dirname(inputPath);
-        const folderMap = {
-            component: 'src/components',
-            service: 'src/services',
-            interface: 'src/interfaces'
-        };
+        const folderMap = FOLDER_MAP;
 
         // Build the final path + subfolder 
         const targetBaseDir = folderMap[selectedType] || 'src';
