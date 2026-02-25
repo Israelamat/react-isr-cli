@@ -53,7 +53,7 @@ program
 
         // Build the final path + subfolder 
         const targetBaseDir = folderMap[selectedType] || 'src';
-        const finalFolder = path.join(process.cwd(), targetBaseDir, subFolder);
+        const finalFolder = path.join(targetBaseDir, subFolder);
 
         const extension = selectedType === 'component' ? 'tsx' : 'ts';
         const filePath = path.join(finalFolder, `${baseName}.${extension}`);
@@ -62,6 +62,21 @@ program
         try {
             if (typeof templates[selectedType] !== 'function') {
                 throw new Error(`There is no template for: ${selectedType}`);
+            }
+
+            const exists = await fs.pathExists(filePath);
+            if (exists) {
+                const overwrite = await inquirer.prompt([{
+                    type: 'confirm',
+                    name: 'overwrite',
+                    message: chalk.yellow(`File already exists: ${chalk.white(filePath)}. Do you want to overwrite it?`),
+                    default: false
+                }]);
+
+                if (!overwrite.overwrite) {
+                    console.log(chalk.blue('\n Operation canceled'));
+                    return;
+                }
             }
 
             await fs.ensureDir(finalFolder);
