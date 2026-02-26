@@ -2,12 +2,12 @@
   "name": "react-isr-cli",
   "version": "1.0.0",
   "description": "Generate a project from a templates like interfaces services and standard components",
-  "main": "index.js",
+  "main": "src/main.js",
   "bin": {
-    "rg": "./index.js"
+    "rg": "./src/main.js"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/main.js"
   },
   "dependencies": {
     "chalk": "^5.6.2",
