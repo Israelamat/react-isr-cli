@@ -35,10 +35,9 @@ export const generateActions = async (type, pathArg) => {
     // --- INTELIGENCE PATH ---
     const baseName = path.basename(inputPath);
     const subFolder = path.dirname(inputPath);
-    const folderMap = FOLDER_MAP;
 
     // Build the final path + subfolder 
-    const targetBaseDir = folderMap[selectedType] || 'src';
+    const targetBaseDir = FOLDER_MAP[selectedType] || 'src';
     const finalFolder = path.join(targetBaseDir, subFolder);
 
     const extension = selectedType === 'component' ? 'tsx' : 'ts';
@@ -50,26 +49,41 @@ export const generateActions = async (type, pathArg) => {
             throw new Error(`There is no template for: ${selectedType}`);
         }
 
-        const exists = await fs.pathExists(filePath);
-        if (exists) {
-            const overwrite = await inquirer.prompt([{
-                type: 'confirm',
-                name: 'overwrite',
-                message: chalk.yellow(`File already exists: ${chalk.white(filePath)}. Do you want to overwrite it?`),
-                default: false
-            }]);
+        const templateResult = templates[selectedType](baseName);
+        let filesToWrite = [];
 
-            if (!overwrite.overwrite) {
-                console.log(chalk.blue('\n Operation canceled'));
-                return;
-            }
+        if (templateResult.files) {
+            filesToWrite = templateResult.files.map(f => ({
+                path: path.join(finalFolder, f.name),
+                content: f.content
+            }))
+        } else {
+            const ext = selectedType.startsWith('c') ? 'tsx' : 'ts';
+            filesToWrite = [{
+                path: path.join(finalFolder, `${baseName}.${ext}`),
+                content: templateResult
+            }]
         }
 
-        await fs.ensureDir(finalFolder);
-        const content = templates[selectedType](baseName);
-        await fs.writeFile(filePath, content.trim());
+        for (const file of filesToWrite) {
+            const exists = await fs.pathExists(filePath);
+            if (exists) {
+                const overwrite = await inquirer.prompt([{
+                    type: 'confirm',
+                    name: 'overwrite',
+                    message: chalk.yellow(`File already exists: ${chalk.white(filePath)}. Do you want to overwrite it?`),
+                    default: false
+                }]);
 
-        console.log(chalk.green(`\n Create in: ${chalk.white(filePath)}`));
+                if (!overwrite.overwrite) {
+                    console.log(chalk.blue('\n Operation canceled'));
+                    continue;
+                }
+            }
+            await fs.outputFile(file.path, file.content.trim());
+            console.log(chalk.green(`\n Create in: ${chalk.white(filePath)}`));
+
+        }
     } catch (err) {
         console.error(chalk.red('\n Error:'), err.message);
     }

@@ -8,6 +8,8 @@ export const FOLDER_MAP = {
 
 export const ALIAS_MAP = {
   'c': 'component',
+  'ct': 'componenttailwind',
+  'ccss': 'componentcss',
   'i': 'interface',
   'sf': 'servicef',
   'sa': 'servicea'
@@ -25,6 +27,8 @@ ${chalk.bold.yellow('COMMANDS:')}
 
 ${chalk.bold.yellow('AVAILABLE ALIASES:')}
   ${chalk.cyan('c   ')} -> ${chalk.white('component')}
+  ${chalk.cyan('ct  ')} -> ${chalk.white('componenttailwind')}
+  ${chalk.cyan('ccss ')} -> ${chalk.white('componentcss')}
   ${chalk.cyan('i   ')} -> ${chalk.white('interface')}
   ${chalk.cyan('sf  ')} -> ${chalk.white('servicef')}
   ${chalk.cyan('sa  ')} -> ${chalk.white('servicea')}
