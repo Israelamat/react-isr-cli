@@ -1,14 +1,13 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import fs from 'fs-extra';
 import path from 'path';
 import templates from '../templates/templates.js';
 import { ALIAS_MAP, FOLDER_MAP, TYPE_CHOICES } from '../config/constants.js';
+import { generateComponents } from './generateComponents.js';
 
 export const generateActions = async (type, pathArg) => {
 
     let selectedType = ALIAS_MAP[type] || type;
-    let inputPath = pathArg;
 
     // If no type is provided, ask the user
     if (!selectedType) {
@@ -22,21 +21,19 @@ export const generateActions = async (type, pathArg) => {
     }
 
     //Only ask the path if no path is provided
-    if (!inputPath) {
+    if (!pathArg) {
         const answers = await inquirer.prompt([{
             type: 'input',
             name: 'path',
             message: '¿Where do u want to generate the file?',
             validate: (val) => val ? true : 'Name is required'
         }]);
-        inputPath = answers.path;
+        pathArg = answers.path;
     }
 
-    // --- INTELIGENCE PATH ---
-    const baseName = path.basename(inputPath);
-    const subFolder = path.dirname(inputPath);
+    const baseName = path.basename(pathArg);
+    const subFolder = path.dirname(pathArg);
 
-    // Build the final path + subfolder 
     const targetBaseDir = FOLDER_MAP[selectedType] || 'src';
     const finalFolder = path.join(targetBaseDir, subFolder);
 
@@ -49,41 +46,8 @@ export const generateActions = async (type, pathArg) => {
             throw new Error(`There is no template for: ${selectedType}`);
         }
 
-        const templateResult = templates[selectedType](baseName);
-        let filesToWrite = [];
+        generateComponents(selectedType, baseName, finalFolder, filePath);
 
-        if (templateResult.files) {
-            filesToWrite = templateResult.files.map(f => ({
-                path: path.join(finalFolder, f.name),
-                content: f.content
-            }))
-        } else {
-            const ext = selectedType.startsWith('c') ? 'tsx' : 'ts';
-            filesToWrite = [{
-                path: path.join(finalFolder, `${baseName}.${ext}`),
-                content: templateResult
-            }]
-        }
-
-        for (const file of filesToWrite) {
-            const exists = await fs.pathExists(filePath);
-            if (exists) {
-                const overwrite = await inquirer.prompt([{
-                    type: 'confirm',
-                    name: 'overwrite',
-                    message: chalk.yellow(`File already exists: ${chalk.white(filePath)}. Do you want to overwrite it?`),
-                    default: false
-                }]);
-
-                if (!overwrite.overwrite) {
-                    console.log(chalk.blue('\n Operation canceled'));
-                    continue;
-                }
-            }
-            await fs.outputFile(file.path, file.content.trim());
-            console.log(chalk.green(`\n Create in: ${chalk.white(filePath)}`));
-
-        }
     } catch (err) {
         console.error(chalk.red('\n Error:'), err.message);
     }
