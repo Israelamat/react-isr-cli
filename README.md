@@ -1,7 +1,7 @@
 # react-isr-cli
 
 ![Node.js](https://img.shields.io/badge/node-%3E%3D16-brightgreen)
-![npm](https://img.shields.io/badge/npm-unpublished-lightgrey)
+![npm](https://www.npmjs.com/package/react-isr-cli)
 
 ## 🚀 What is it
 
