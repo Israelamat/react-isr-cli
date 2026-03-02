@@ -1,15 +1,18 @@
-# react-isr-cli
+#react-isr-cli
 
-![Node.js](https://img.shields.io/badge/node-%3E%3D16-brightgreen)
-![npm](https://www.npmjs.com/package/react-isr-cli)
+<p align="center">
+  <img src="https://img.shields.io/badge/node-%3E%3D16-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/npm/v/@israelamat/react-isr-cli?style=for-the-badge&color=cb3837&logo=npm&logoColor=white" alt="npm version" />
+</p>
 
 ## 🚀 What is it
 
 **`react-isr-cli`** is a custom CLI for React projects that allows you to quickly generate **standardized files** such as:
 
 - **Interfaces (TypeScript)**
-- **Services**
-- **React Components**  
+- **Services (Axios/Fetch)**
+- **React Components (Tailwind/CSS)**
+- **Feature Structures** (Hooks, Services, Routes)
 
 Its goal is to speed up development, maintain consistency across projects, and save time on repetitive tasks.
 
