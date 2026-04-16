@@ -1,6 +1,6 @@
 {
   "name": "react-isr-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate a project from a templates like interfaces services and standard components",
   "main": "src/main.js",
   "bin": {
