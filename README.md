@@ -1,10 +1,12 @@
 # ⚛️ react-isr-cli
 
 <p align="center">
-<img src="https://img.shields.io/badge/node-%3E%3D16-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
-<img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="License" />
+  <img src="https://img.shields.io/badge/node-%3E%3D16-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="License" />
+  <a href="https://www.npmjs.com/package/react-isr-cli">
+    <img src="https://img.shields.io/npm/v/react-isr-cli?style=for-the-badge&logo=npm&color=CB3837" alt="npm version" />
+  </a>
 </p>
-
 ## 🎯 The Vision
 
 **`react-isr-cli`** is a command-line interface inspired by the Angular CLI philosophy, tailored for React projects. Its primary goal is to facilitate the creation of structured and consistent codebases, reducing manual setup and repetitive boilerplate.
