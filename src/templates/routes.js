@@ -1,14 +1,20 @@
 export const routesTemplate = {
-  base: (name) => `import { lazy } from "react";
+  base: (name) => `import { lazy, Suspense } from "react";
 import { RouteObject } from "react-router-dom";
 
-const ${name}Page = lazy(() => import("./components/${name}Card"));
+const User = lazy(() => import("./components/user"));
 
-export const ${name.toLowerCase()}Routes: RouteObject[] = [
+export const userRoutes: RouteObject[] = [
   {
-    path: "${name.toLowerCase()}",
-    element: <${name}Page />,
+    path: "/user",
+    element: (
+      <Suspense fallback={<div>Loading user...</div>}>
+        <User />
+      </Suspense>
+    ),
   },
 ];
+
+export default User;
 `
 };

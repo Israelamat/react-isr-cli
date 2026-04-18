@@ -17,15 +17,17 @@ export const ${name} = () => {
 
   // Component Template with Tailwind
   tailwind: (name) => {
-    return `import React, { useState } from 'react';
+    return `import React from "react";
 
-export const ${name} = () => {
+export const User = () => {
   return (
     <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-md">
-      <h1 className="text-xl font-bold text-blue-600">${name} Component</h1>
+      <h1 className="text-xl font-bold text-blue-600">User Component</h1>
     </div>
   );
 };
+
+export default User;
 `.trim();
   },
 

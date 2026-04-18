@@ -45,4 +45,37 @@ ${chalk.bold.yellow('EXAMPLES:')}
   $ rg g f Post                 ${chalk.gray('# Create a entire new feature in src/features/Post')}
 `;
 
-export default { FOLDER_MAP, ALIAS_MAP, TYPE_CHOICES, HELP_TEXT };
+export const FEATURE_DEPS = {
+  feature: [
+    "react-router-dom",
+    "axios",
+    "react",
+    "react-dom",
+    "@types/react",
+    "@types/react-dom"
+  ],
+
+  routes: [
+    "react-router-dom",
+    "react",
+    "react-dom",
+    "@types/react",
+    "@types/react-dom"
+  ],
+
+  servicea: ["axios"],
+  servicef: ["react",
+    "react-dom",
+    "@types/react",
+    "@types/react-dom"],
+  component: ["react",
+    "react-dom",
+    "@types/react",
+    "@types/react-dom"],
+  hooks: ["react",
+    "react-dom",
+    "@types/react",
+    "@types/react-dom"]
+};
+
+export default { FOLDER_MAP, ALIAS_MAP, TYPE_CHOICES, HELP_TEXT, FEATURE_DEPS };

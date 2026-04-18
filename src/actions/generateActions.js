@@ -4,6 +4,9 @@ import path from 'path';
 import templates from '../templates/templates.js';
 import { ALIAS_MAP, FOLDER_MAP, TYPE_CHOICES } from '../config/constants.js';
 import { generateComponents } from './generateComponents.js';
+import { installDependencies } from "../installers/dependencyInstaller.js";
+import { isDependencyInstalled } from "../utils/isDependencyInstalled.js";
+import { FEATURE_DEPS } from '../config/constants.js';
 
 export const generateActions = async (type, pathArg) => {
 
@@ -47,6 +50,14 @@ export const generateActions = async (type, pathArg) => {
         }
 
         generateComponents(selectedType, baseName, finalFolder, filePath);
+
+        const deps = FEATURE_DEPS[selectedType] || [];
+
+        const missingDeps = deps.filter(dep => !isDependencyInstalled(dep));
+
+        if (missingDeps.length > 0) {
+            installDependencies(missingDeps);
+        }
 
     } catch (err) {
         console.error(chalk.red('\n Error:'), err.message);
